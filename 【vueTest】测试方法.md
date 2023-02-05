@@ -1,3 +1,5 @@
+[api 文档](https://v1.test-utils.vuejs.org/zh/api/wrapper/)
+
 ## 基本例子
 
 ```js
@@ -102,7 +104,7 @@ list.length; //6
 expect(list).toHavaLength(6);
 ```
 
-## props
+## 参数
 
 ### props()
 
@@ -118,6 +120,43 @@ wrap.props(); // {text: "测试1", disabled: false}
 // 返回一个object，除了传入的text，没有传入,但是组件定义的props都能获取到
 // 如果传入了组件内部未定义的prop,那么获取时是获取不到的
 ```
+
+### minix
+
+- 局部
+  和 props 类似,在挂载节点时,定义 minix 对象传入.
+
+  挂载组件后会自动调用回调的
+
+  ```js
+  const MixinExp = {
+    created() {
+      console.log("created--mixins");
+    },
+  };
+  test("mixin", () => {
+    const comp = mount(WlButton, {
+      mixins: [MixinExp],
+    });
+  });
+  ```
+
+- 全局
+
+  ```js
+  import Vue from "vue";
+  Vue.config.productonTip = false;
+  Vue.mixins(MixinExp);
+  ```
+
+  在配置项中设置[setupFiles](https://jestjs.io/zh-Hans/docs/configuration#setupfiles-array)选项
+
+  ``` json
+  {
+    ...,
+    "setupFiles": ["filepath"]
+  }
+  ```
 
 ## 定时器
 
@@ -175,6 +214,8 @@ if (root.$options.mocks) {
   root.$options.mocks.$aaa.end();
 }
 ```
+
+- 测试 router 方法就是将数据挂载到 mock 里面
 
 ## 异步
 
